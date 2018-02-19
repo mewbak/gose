@@ -59,3 +59,27 @@ func TestAbsoluteX(t *testing.T) {
 		}
 	}
 }
+
+func TestPAbsolute(t *testing.T) {
+	memory := memory.New()
+	memory.SetByteBank(0xFE, 0x7E, 0x00001)
+	memory.SetByteBank(0xFF, 0x7E, 0x00002)
+
+	testCases := []struct {
+		cpu      *CPU
+		expected uint16
+	}{
+		{
+			cpu:      &CPU{K: 0x7E, DBR: 0x12, X: 0x000A, memory: memory},
+			expected: 0x0000,
+		},
+	}
+
+	for i, tc := range testCases {
+		address := tc.cpu.admPAbsoluteJ()
+
+		if address != tc.expected {
+			t.Errorf("Test %v failed: %x %x\n", i, address, tc.expected)
+		}
+	}
+}
