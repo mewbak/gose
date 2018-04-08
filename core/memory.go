@@ -97,6 +97,9 @@ func (memory *Memory) SetByteBank(value uint8, K uint8, offset uint16) {
 				memory.wram[offset] = value
 			} else if 0x20FF < offset && offset < 0x2134 {
 				memory.ppu.Registers[offset-0x2100](value)
+			} else if 0x4300 < offset && offset < 0x5fff {
+				// DMA
+				memory.cpu.SetDma(offset, value)
 			}
 		} else if offset < 0x8000 && ((0x6F < K && K < 0x7E) || (0xEF < K && K < 0xFE)) {
 			memory.sram[offset] = value
