@@ -107,7 +107,7 @@ func (memory *Memory) SetByteBank(value uint8, K uint8, offset uint16) {
 				memory.ppu.Registers[offset-0x2100](value)
 			} else if 0x4300 < offset && offset < 0x5fff {
 				// DMA
-				fmt.Printf("DMA set: %x <- \n", offset, value)
+				fmt.Printf("DMA set: %x <- %v \n", offset, value)
 				memory.cpu.SetDma(offset, value)
 			}
 		} else if offset < 0x8000 && ((0x6F < K && K < 0x7E) || (0xEF < K && K < 0xFE)) {
