@@ -328,7 +328,10 @@ func (cpu *CPU) Start() {
 			fmt.Printf("Emulator exited")
 			os.Exit(0)
 		default:
-			opcode := cpu.memory.GetByteBank(cpu.getKRegister(), cpu.getPCRegister())
+			K := cpu.getKRegister()
+			PC := cpu.getPCRegister()
+			fmt.Printf("%x/%x\n", K, PC)
+			opcode := cpu.memory.GetByteBank(K, PC)
 			fmt.Printf("opcode: %x\n", opcode)
 			cpu.opcodes[opcode]()
 		}
